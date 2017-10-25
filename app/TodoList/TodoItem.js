@@ -43,7 +43,7 @@ export default class TodoItem extends Component {
             case '2': importanceText = 'Важно'; break;
             case '3': importanceText = 'Очень важно'; break;
         }
-    
+
         const leftContentDone = (
             <View style={styles.leftContent}>
                 <SIcon name="check" size={30} color="white" />
@@ -53,7 +53,7 @@ export default class TodoItem extends Component {
                 <SIcon name="close" size={30} color="white" />
             </View>);
         const leftContent = (item.done) ? leftContentUndone : leftContentDone;
-    
+
         const editButton = (
             <View style={styles.hiddenButton}>
                 <TouchableOpacity
@@ -62,7 +62,7 @@ export default class TodoItem extends Component {
                     <Icon name="edit" size={30} color="grey" />
                 </TouchableOpacity>
             </View>);
-    
+
         const deleteButton = (
             <View style={styles.hiddenButton}>
                 <TouchableOpacity
@@ -71,13 +71,13 @@ export default class TodoItem extends Component {
                     <Icon name="delete" size={30} color="grey" />
                 </TouchableOpacity>
             </View>);
-    
+
         const rightButtons = [editButton, deleteButton];
         const colorClasses = [
             (isOverdue) ? styles.redText : null,
             (item.done) ? styles.greenText : null
         ];
-    
+
         return (
             <Swipeable
                 style={{ marginTop: 15 }}
@@ -93,7 +93,7 @@ export default class TodoItem extends Component {
                             <Icon name="check" size={40} color="rgba(24, 163, 54, 0.8)" />
                         </View>
                     }
-                    <View style={{ justifyContent: 'space-between' }}>
+                    <View style={ styles.todoBody }>
                         <Text style={[ styles.name, ...colorClasses ]}>
                             { item.name }
                         </Text>
@@ -102,9 +102,10 @@ export default class TodoItem extends Component {
                                 <Text style={colorClasses}>{ item.description || 'Нет описания' }</Text>
                                 <Text style={colorClasses}>Запланировано: { mustBeDoneFormatted }</Text>
                                 { doneAt && <Text style={colorClasses}>Выполнено: { doneAtFormatted }</Text> }
+                                <Text style={colorClasses}>Приоритет: { importanceText }</Text>
                             </View>
                         }
-                        { !this.state.showFullInfo && 
+                        { !this.state.showFullInfo &&
                             <Text style={colorClasses}>{ importanceText}, { shortDate }</Text>
                         }
                     </View>
@@ -112,7 +113,7 @@ export default class TodoItem extends Component {
             </Swipeable>
         );
     }
-    
+
 }
 
 const styles = StyleSheet.create({
@@ -122,6 +123,11 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         flexDirection: 'row'
+    },
+    todoBody: {
+        justifyContent: 'space-between',
+        width: 0,
+        flexGrow: 1
     },
     name : {
         fontSize: 20,
